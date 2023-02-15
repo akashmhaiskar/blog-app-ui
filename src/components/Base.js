@@ -1,18 +1,15 @@
 import CustomNavbar from "./CustomNavbar";
 
-const Base= ({title="Welcome to our website", children}) => {
+const Base = ({ title = "Welcome to our website", children }) => {
+  return (
+    <div className="container-fluid p-0 m-0">
+      <CustomNavbar />
 
-    return (
-                <div className="container-fluid p-0 m-0">
-                <CustomNavbar/>
+      {children}
 
-                {children}
-
-
-                <h1>This is footer</h1>
-
-                </div>
-    );
+      <h1>This is footer</h1>
+    </div>
+  );
 };
 
 export default Base;

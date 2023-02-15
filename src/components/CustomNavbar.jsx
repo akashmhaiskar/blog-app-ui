@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import {NavLink as ReactLink} from "react-router-dom" 
+import React, { useState } from "react";
+import { NavLink as ReactLink } from "react-router-dom";
 import {
   Collapse,
   Navbar,
@@ -12,26 +12,25 @@ import {
   DropdownToggle,
   DropdownMenu,
   DropdownItem,
-  NavbarText
-} from 'reactstrap';
+  NavbarText,
+} from "reactstrap";
 
 const CustomNavbar = () => {
-
-    const [isOpen, setIsOpen]= useState(false);
+  const [isOpen, setIsOpen] = useState(false);
 
   return (
     <div>
-      <Navbar
-      color="dark"
-      dark
-      expand="md"
-      fixed="">
-        <NavbarBrand tag={ReactLink} to="/">MyBlogs</NavbarBrand>
-        <NavbarToggler onClick={() => setIsOpen(!isOpen)}/>
+      <Navbar color="dark" dark expand="md" fixed="">
+        <NavbarBrand tag={ReactLink} to="/">
+          MyBlogs
+        </NavbarBrand>
+        <NavbarToggler onClick={() => setIsOpen(!isOpen)} />
         <Collapse isOpen={isOpen} navbar>
           <Nav className="me-auto" navbar>
             <NavItem>
-              <NavLink tag={ReactLink} to="/about">About</NavLink>
+              <NavLink tag={ReactLink} to="/about">
+                About
+              </NavLink>
             </NavItem>
             <NavItem>
               <NavLink tag={ReactLink} to="/login">
@@ -48,7 +47,9 @@ const CustomNavbar = () => {
                 More
               </DropdownToggle>
               <DropdownMenu right>
-                <DropdownItem tag={ReactLink} to="/services">Services</DropdownItem>
+                <DropdownItem tag={ReactLink} to="/services">
+                  Services
+                </DropdownItem>
                 <DropdownItem>Contact us</DropdownItem>
                 <DropdownItem divider />
                 <DropdownItem>Youtube</DropdownItem>
@@ -60,6 +61,6 @@ const CustomNavbar = () => {
       </Navbar>
     </div>
   );
-}
+};
 
 export default CustomNavbar;
