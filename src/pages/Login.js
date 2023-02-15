@@ -35,14 +35,18 @@ const Login = () => {
                   {/*password field */}
                   <FormGroup>
                     <Label for="password">Enter password</Label>
-                    <Input
-                      type="password"
-                      id="password"
-                    />
+                    <Input type="password" id="password" />
                   </FormGroup>
                   <Container className="text-center">
-                    <Button color="light" outline>Login</Button>
-                    <Button color="secondary" type="reset" className="ms-2" outline>
+                    <Button color="light" outline>
+                      Login
+                    </Button>
+                    <Button
+                      color="secondary"
+                      type="reset"
+                      className="ms-2"
+                      outline
+                    >
                       Reset
                     </Button>
                   </Container>
