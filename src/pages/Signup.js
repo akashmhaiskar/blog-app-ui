@@ -11,6 +11,7 @@ import {
   Button,
   Row,
   Col,
+  FormFeedback,
 } from "reactstrap";
 import Base from "../components/Base";
 import { signUp } from "../services/user-service";
@@ -50,6 +51,11 @@ const Signup = () => {
   const submitForm = (event) => {
     event.preventDefault();
 
+    // if(error.isError){
+    //   toast.error("Form data is invalid, correct all details then submit")
+    //   setError({...error, isError:false})
+    //   return;
+    // }
     console.log(data);
     //data validate
 
@@ -57,7 +63,7 @@ const Signup = () => {
     signUp(data).then((resp) => {
       console.log(resp)
       console.log("success log")
-      toast.success("User is registerd successfully !!")
+      toast.success("User is registerd successfully !!" + resp.id)
       setData({
         name: "",
         email: "",
@@ -68,6 +74,12 @@ const Signup = () => {
     }).catch((error) => {
       console.log(error)
       console.log("Error Log")
+
+      //handle errors in proper way
+      setError({
+        errors:error,
+        isError:true
+      })
     });    
   };
 
@@ -93,8 +105,15 @@ const Signup = () => {
                       id="name"
                       onChange={(e) => handleChange(e, "name")}
                       value={data.name}
+                      invalid={error.errors?.response?.data?.name ? true : false }
                     />
+                    <FormFeedback>
+                    {error.errors?.response?.data?.name }
+                  </FormFeedback>
                   </FormGroup>
+
+
+
 
                   {/*Email field */}
                   <FormGroup>
@@ -105,7 +124,12 @@ const Signup = () => {
                       id="email"
                       onChange={(e) => handleChange(e, "email")}
                       value={data.email}
+                      invalid={error.errors?.response?.data?.email ? true : false }
                     />
+                    <FormFeedback>
+                    {error.errors?.response?.data?.email }
+                  </FormFeedback>
+                    
                   </FormGroup>
 
                   {/*password field */}
@@ -116,7 +140,11 @@ const Signup = () => {
                       id="password"
                       onChange={(e) => handleChange(e, "password")}
                       value={data.password}
-                    />
+                      invalid={error.errors?.response?.data?.password ? true : false }
+                      />
+                      <FormFeedback>
+                      {error.errors?.response?.data?.password }
+                    </FormFeedback>
                   </FormGroup>
 
                   {/*about field */}
@@ -129,7 +157,11 @@ const Signup = () => {
                       style={{ height: "250px" }}
                       onChange={(e) => handleChange(e, "about")}
                       value={data.about}
-                    />
+                      invalid={error.errors?.response?.data?.about ? true : false }
+                      />
+                      <FormFeedback>
+                      {error.errors?.response?.data?.about }
+                    </FormFeedback>
                   </FormGroup>
                   <Container className="text-center">
                     <Button color="light" outline>
