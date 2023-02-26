@@ -13,6 +13,9 @@ import {
   Col,
 } from "reactstrap";
 import Base from "../components/Base";
+import { signUp } from "../services/user-service";
+import {toast } from 'react-toastify';
+
 
 const Signup = () => {
   const [data, setData] = useState({
@@ -51,13 +54,27 @@ const Signup = () => {
     //data validate
 
     //call server api for sending data
+    signUp(data).then((resp) => {
+      console.log(resp)
+      console.log("success log")
+      toast.success("User is registerd successfully !!")
+      setData({
+        name: "",
+        email: "",
+        password: "",
+        about: ""
+
+      })
+    }).catch((error) => {
+      console.log(error)
+      console.log("Error Log")
+    });    
   };
 
   return (
     <Base>
       <Container>
         <Row className="mt-4">
-          {JSON.stringify(data)}
           <Col sm={{ size: 6, offset: 3 }}>
             <Card color="dark" inverse>
               <CardHeader>
