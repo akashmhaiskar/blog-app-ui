@@ -15,6 +15,7 @@ import { useEffect, useState } from "react";
 import {toast } from 'react-toastify';
 import Base from "../components/Base";
 import { loginUser } from "../services/user-service";
+import { doLogin } from "../auth";
 
 const Login = () => {
 
@@ -51,9 +52,14 @@ const handleFormSubmit = (event) =>{
   }
 
   //submit the data to server to generate token
-  loginUser(loginDetail).then((jwtTokenData) => {
-    console.log("user login: ")
-    console.log(jwtTokenData)
+  loginUser(loginDetail).then((data) => {
+    console.log(data)
+
+    //save the data to localStorage
+    doLogin(data, ()=>{
+      console.log("login detail is saved to locals")
+      //redirect to user dashboard page
+    })
     toast.success('Login Success !!')
   }).catch(error => {
     console.log(error)
