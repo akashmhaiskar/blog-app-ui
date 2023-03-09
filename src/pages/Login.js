@@ -53,7 +53,7 @@ const handleFormSubmit = (event) =>{
 
   //submit the data to server to generate token
   loginUser(loginDetail).then((data) => {
-    console.log(data)
+ //   console.log(data)
 
     //save the data to localStorage
     doLogin(data, ()=>{
