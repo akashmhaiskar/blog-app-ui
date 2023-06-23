@@ -76,7 +76,7 @@ const AddPost = () => {
     //sumbit the form on server
     post['userId'] = user.id
     doCreatePost(post).then(data=>{
-      toast.success("Post Created ")
+      toast.success("Post Created !!")
       //console.log(post)
       setPost({
         title:'',
