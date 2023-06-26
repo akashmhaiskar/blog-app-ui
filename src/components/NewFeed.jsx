@@ -3,6 +3,7 @@ import { loadAllPosts } from '../services/post-service'
 import { Col, Row, Pagination, PaginationItem, PaginationLink, Container } from 'reactstrap'
 import Post from './Post'
 import {toast} from 'react-toastify'
+import InfiniteScroll from 'react-infinite-scroll-component'
 
 function NewFeed() {
 
@@ -16,11 +17,13 @@ function NewFeed() {
     pageNumber:''
    })
 
+   const [currentPage,setCurrentPage]=useState(0)
+
 
     useEffect(()=>{
         // load all the posts from server
-        changePage(0)
-          },[])
+        changePage(currentPage)
+          },[currentPage])
 
           const changePage=(pageNumber=0,pageSize=5)=>{
             if(pageNumber > postContent.pageNumber && postContent.lastPage){
@@ -30,11 +33,23 @@ function NewFeed() {
               return
           }
             loadAllPosts(pageNumber,pageSize).then((data)=>{
-                setPostContent(data)
-                window.scroll(0,0)
+                setPostContent({
+                  content:[...postContent.content, ...data.content],
+                  totalPages:data.totalPages,
+                  totalElements:data.totalElements,
+                  pageSize:data.pageSize,
+                  lastPage:data.lastPage,
+                  pageNumber:data.pageNumber
+                })
+                //window.scroll(0,0)
             }).catch(error=>{
                 toast.error("Errorin loading post")
             })
+          }
+
+          const changePageInfinite=()=>{
+            console.log("page changed")
+            setCurrentPage(currentPage+1)
           }
 
   return (
@@ -47,11 +62,24 @@ function NewFeed() {
           }}
         >
           <h1>Blogs Count ({postContent?.totalElements})</h1>
-          {postContent.content.map((post) => (
-            <Post post={post} key={post.postId} />
-          ))}
 
-          <Container className="mt-3">
+          <InfiniteScroll
+          dataLength={postContent.content.length}
+          next={changePageInfinite}
+          hasMore={!postContent.lastPage}
+          loader={<h4>Loading...</h4>}
+          endMessage={
+            <p style={{ textAlign: 'center' }}>
+              <b>Yay! You have seen it all</b>
+            </p>
+          }
+          >
+            {postContent.content.map((post) => (
+              <Post post={post} key={post.postId} />
+            ))}
+          </InfiniteScroll>
+
+          {/* <Container className="mt-3">
             <Pagination size='lg'>
               <PaginationItem onClick={()=>changePage(postContent.pageNumber -1)} disabled={ postContent.pageNumber==0}>
                 <PaginationLink previous>
@@ -73,7 +101,7 @@ function NewFeed() {
                 </PaginationLink>
               </PaginationItem>
             </Pagination>
-          </Container>
+          </Container> */}
         </Col>
       </Row>
     </div>
