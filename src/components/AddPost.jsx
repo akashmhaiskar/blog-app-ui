@@ -1,7 +1,7 @@
 import JoditEditor from "jodit-react";
 import { useRef } from "react";
 import { useEffect, useState } from "react";
-import { createPost as doCreatePost } from "../services/post-service";
+import { createPost as doCreatePost, uploadPostImage } from "../services/post-service";
 import {
   Button,
   Card,
@@ -28,6 +28,7 @@ const AddPost = () => {
     categoryId: "",
   });
 
+  const [image,setImage] = useState(null)
   // const config={
   //     placeholder:"Start typing"
   // }
@@ -76,6 +77,12 @@ const AddPost = () => {
     //sumbit the form on server
     post['userId'] = user.id
     doCreatePost(post).then(data=>{
+
+      uploadPostImage(image,data.postId).then(data=>{
+        toast.success("Image Uploaded !!")
+      }).catch(error=>{
+        toast.error("Error in uploading image")
+      })
       toast.success("Post Created !!")
       //console.log(post)
       setPost({
@@ -88,6 +95,12 @@ const AddPost = () => {
       //console.log(error)
     })
   };
+
+  //handle file change event
+  const handleFileChange=(event)=>{
+    console.log(event.target.files[0])
+    setImage(event.target.files[0])
+  }
 
   return (
     <div className="wrapper">
@@ -123,6 +136,13 @@ const AddPost = () => {
                 onChange={contentFieldChanged}
               />
             </div>
+
+
+              <div className="mt-3">
+                <Label for="image">Select Post Banner</Label>
+                <Input id="image" type="file" onChange={handleFileChange}/>
+              </div>
+
             <div className="my-3">
               <Label for="category">Post Category</Label>
               <Input
