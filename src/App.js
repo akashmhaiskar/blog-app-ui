@@ -12,7 +12,8 @@ import Privateroutes from "./components/Privateroutes";
 import UserDashboard from "./pages/user-routes/UserDashboard";
 import ProfileInfo from "./pages/user-routes/ProfileInfo";
 import PostPage from "./pages/PostPage";
-import UserProvider from "./context/UserProvider"
+import UserProvider from "./context/UserProvider";
+import Categories from "./pages/Categories";
 
 //import UserProvider from "./context/UserProvider";
 
@@ -28,10 +29,12 @@ function App() {
         <Route path="/about" element={<About />} />
         <Route path="/services" element={<Services />} />
         <Route path="/posts/:postId" element={<PostPage />} />
+        <Route path="/categories/:categoryId" element={<Categories/>} />
 
         <Route path="/user" element={<Privateroutes />} >
         <Route path="dashboard" element={<UserDashboard />} />
         <Route path="profile-info" element={<ProfileInfo />} />
+        
         </Route>
 
       </Routes>
